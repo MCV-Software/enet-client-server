@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-""" Dfinition of all GUI components. """
+""" Definition of all GUI components. """
 import wx
 
 class loginDialog(wx.Dialog):
@@ -48,6 +48,12 @@ class loginDialog(wx.Dialog):
 		self.SetClientSize(sizer.CalcMin())
 
 class appFrame(wx.Frame):
+	menu_items = [
+			("create_room", "Create new room"),
+			("join_room", "Join a room")
+		]
+	secondary_menu_items = list()
+
 	def __init__(self):
 		super(appFrame, self).__init__(parent=None, title="Chat Window")
 		self.Maximize(True)
@@ -60,12 +66,14 @@ class appFrame(wx.Frame):
 		self.sizer.Add(self.list, 1, wx.GROW)
 		lbl = wx.StaticText(self.panel, -1, "Chat")
 		self.chat = wx.TextCtrl(self.panel, -1)
+		self.chat.Enable(False)
 		sizerchat = wx.BoxSizer(wx.HORIZONTAL)
 		sizerchat.Add(lbl, 0, wx.ALL, 5)
 		sizerchat.Add(self.chat, 0, wx.ALL, 5)
 		self.sizer.Add(sizerchat, 0, wx.ALL, 5)
 		lbl1 = wx.StaticText(self.panel, wx.ID_ANY, "History")
 		self.history = wx.TextCtrl(self.panel, wx.ID_ANY, style=wx.TE_READONLY|wx.TE_MULTILINE, size=(500, 300))
+		self.history.Enable(False)
 		box = wx.BoxSizer(wx.HORIZONTAL)
 		box.Add(lbl1, 0, wx.ALL, 5)
 		box.Add(self.history, 0, wx.ALL, 5)
@@ -85,6 +93,12 @@ class appFrame(wx.Frame):
 		self.history.SetInsertionPoint(point)
 		new_line = self.history.GetNumberOfLines()#.count("\n")
 		return (old_line, new_line)
+
+	def enable_app(self):
+		for i in self.menu_items:
+			self.list.Append(i[1])
+		self.chat.Enable(True)
+		self.history.Enable(True)
 
 	def  show_connection_error(self):
 		msg = wx.MessageDialog(None, "Connection error. Try again", "error", style=wx.ICON_ERROR).ShowModal()

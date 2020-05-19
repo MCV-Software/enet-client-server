@@ -26,7 +26,7 @@ class channel(object):
 
 class server(object):
 
-	def __init__(self, host=b"localhost", port=33333, peer_count=256, channel_limit=4, incoming_bandwidth=0, outgoing_bandwidth=0):
+	def __init__(self, host=None, port=33333, peer_count=256, channel_limit=4, incoming_bandwidth=0, outgoing_bandwidth=0):
 		address = enet.Address(host, port)
 		self.host = enet.Host(address, peer_count, channel_limit, incoming_bandwidth, outgoing_bandwidth)
 		self.peers = {}

@@ -34,7 +34,7 @@ class client(object):
 		else:
 			flags = enet.PACKET_FLAG_UNSEQUENCED
 		packet = enet.Packet(data_bytes, flags)
-		print(self.peer.send(channel, packet))
+		self.peer.send(channel, packet)
 
 	def network(self, event, data):
 		print(data)

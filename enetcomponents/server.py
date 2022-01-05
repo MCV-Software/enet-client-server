@@ -45,7 +45,7 @@ class server(object):
 					print("Error receiving packet for invalid channel: %r" % (event.data))
 					return
 				data = event.packet.data
-				data_dict = json.loads(data, encoding="utf-8")
+				data_dict = json.loads(data)
 				channel_object.network(event, data_dict)
 			time.sleep(0.0001)
 

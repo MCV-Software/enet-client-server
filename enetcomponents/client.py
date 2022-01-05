@@ -22,7 +22,7 @@ class client(object):
 					self.disconnected(event.peer)
 			elif event.type == enet.EVENT_TYPE_RECEIVE:
 				data = event.packet.data
-				data_dict = json.loads(data, encoding="utf-8")
+				data_dict = json.loads(data)
 				self.network(event, data_dict)
 			time.sleep(0.001)
 

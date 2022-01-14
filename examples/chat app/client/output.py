@@ -9,23 +9,23 @@ speaker = None
 retries = 0
 
 def speak(text, interrupt=0):
-	global speaker, retries
-	if not speaker:
-		setup()
-	try:
-		speaker.speak(text, interrupt)
-	except:
-		if retries < 5:
-			retries = retries + 1
-			speak(text)
+    global speaker, retries
+    if not speaker:
+        setup()
+    try:
+        speaker.speak(text, interrupt)
+    except:
+        if retries < 5:
+            retries = retries + 1
+            speak(text)
 
 def setup ():
-	global speaker
-	logger.debug("Initializing output subsystem.")
-	try:
-		speaker = outputs.auto.Auto()
-	except:
-		logger.exception("Output: Error during initialization.")
+    global speaker
+    logger.debug("Initializing output subsystem.")
+    try:
+        speaker = outputs.auto.Auto()
+    except:
+        logger.exception("Output: Error during initialization.")
 
 def enable_sapi():
-	speaker = outputs.sapi.SAPI5()
+    speaker = outputs.sapi.SAPI5()

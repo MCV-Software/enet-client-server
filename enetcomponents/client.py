@@ -13,18 +13,21 @@ class client(object):
     def run(self):
         self.running = True
         while self.running:
-            event = self.host.service(0)
-            if event.type == enet.EVENT_TYPE_CONNECT:
-                if hasattr(self, "connected"):
-                    self.connected(event.peer)
-            elif event.type == enet.EVENT_TYPE_DISCONNECT:
-                if hasattr(self, "disconnected"):
-                    self.disconnected(event.peer)
-            elif event.type == enet.EVENT_TYPE_RECEIVE:
-                data = event.packet.data
-                data_dict = json.loads(data)
-                self.network(event, data_dict)
+            self.update()
             time.sleep(0.001)
+
+    def update(self):
+        event = self.host.service(0)
+        if event.type == enet.EVENT_TYPE_CONNECT:
+            if hasattr(self, "connected"):
+                self.connected(event.peer)
+        elif event.type == enet.EVENT_TYPE_DISCONNECT:
+            if hasattr(self, "disconnected"):
+                self.disconnected(event.peer)
+        elif event.type == enet.EVENT_TYPE_RECEIVE:
+            data = event.packet.data
+            data_dict = json.loads(data)
+            self.network(event, data_dict)
 
     def send_data(self, channel, data, reliable=True):
         data_str = json.dumps(data, ensure_ascii=False)
